@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karen from AccountingChatbot</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  
+  :root {
+    --bg: #F5F2ED;
+    --surface: #FFFFFF;
+    --surface2: #F0EDE8;
+    --border: #D8D3CC;
+    --font-main: 'Comic Sans MS';
+    --text: #421388;
+    --text2: #6B6560;
+    --text3: #A09B96;
+    --green: #3B6D11;
+    --green-bg: #EAF3DE;
+    --red: #A32D2D;
+    --red-bg: #FCEBEB;
+    --purple: #3C3489;
+    --purple-bg: #EEEDFE;
+    --amber: #854F0B;
+    --amber-bg: #FAEEDA;
+    --lilac: #d89ad6;
+  }
+
+  body {
+    font-family: var(--font-main);
+    background: var(--bg);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .page {
+    width: 100%;
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .title {
+    font-family: var(--font-main);
+    font-size: 35px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .device {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 0 var(--border);
+  }
+
+  .device-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    background: var(--surface);
+    align-items: center;
+  }
+
+  .status-area {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+  }
+
+   .clock {
+    font-family: var(--font-main);
+    font-size: 20px;
+    color: var(--text3);
+    align-items: right;
+  }
+
+  .avatar {
+    font-family: var(--font-main);
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: var(--purple-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--purple);
+    flex-shrink: 0;
+    border: 1px solid #CECBF6;
+  }
+ 
+  .info-role {
+    font-size: 11.6px;
+    color: var(--text2);
+    font-family: var(--font-main);
+    text-align: center;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-family: var(--font-main);
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.05em;
+  }
+
+  .chat-window {
+    height: 500px;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+
+  .input-field {
+    display: flex;
+    gap: 10px;
+    padding: 2rem;
+  }
+  .send-button {
+    color: var(--purple);
+    background: var(--surface);
+    border: 10px solid var(--red);
+    border-radius: 50px;
+    cursor: pointer;
+    padding: 1rem;
+  }
+
+  .attach-button {
+  color: var(--purple);
+  background: var(--surface);
+  border: 10px solid var(--purple);
+  border-radius: 50px;
+  cursor: pointer;
+  padding: 1rem;
+}
+
+  .api-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    z-index: 999;
+  }
+
+ .atlassian-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+  .chat-bubble-Karen {
+    background: var(--lilac);
+    margin-right: auto;
+    border-radius: 18px 18px 18px 0px;
+    padding: 10px 14px;
+    max-width: 70%;
+    margin-bottom: 8px;
+  }
+
+  .chat-bubble-Evelyn {
+    background: var(--lilac);
+    margin-left: auto;
+    border-radius: 18px 18px 0px 18px;
+    padding: 10px 14px;
+    max-width: 70%;
+    margin-bottom: 8px;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="title">Karen Alderman</div>
+  <div class="header"><h1>From Accounting</h1></div>
+  
+  <div class="device">
+    <div class="device-header">
+      <div class="status-area">
+        <div class="clock" id="clock"></div>
+      </div>
+    <img src="karen.jpeg" class="avatar" style="object-fit: cover;">
+    <div class="info-role">Happily married to Steve, three kids. Biscuit's her whole world</div>
+    </div>
+
+    <div class="chat-window" id="chat-window">
+    </div>
+
+    <div class="input-field">
+      <textarea id="user-input" placeholder="Answer Karen..."></textarea>
+      <input type="file" id="image-input" accept="image/*" style="display:none;">
+      <button class="attach-button" onclick="document.getElementById('image-input').click()">📎</button>
+      <button class="send-button" onclick="sendMessage()">Send</button>
+    </div>
+
+    <div class="api-popup" id="api-popup" style="display:none;">
+      <p>Darling. No AI-API key, no Karen. 🙄</p>
+      <input type="text" id="api-key-input" placeholder="Your API key...">
+      <button onclick="submitApiKey()">Fine, here it is</button>
+    </div>
+
+<!--
+    <div class="atlassian-popup" id="atlassian-popup" style="display:none;">
+      <p>Darling. No Atlassian token, no Confluence. 🙄</p>
+      <input type="text" id="atlassian-email-input" placeholder="Your Atlassian email...">
+      <input type="text" id="atlassian-token-input" placeholder="Your Atlassian token...">
+      <button onclick="submitAtlassian()">Fine, here it is</button>
+    </div>
+  -->
+
+
+  </div>
+
+  <div class="footer"><p>A colleague we all have... but every body truely hates. What ever you do... it's wrong.</p></div>
+
+</div>
+
+
+<script>
+
+let clockInterval = null;
+let apiKey = null;
+let conversationHistory = [];
+let karenleft = false;
+let selectedImage = null;
+let lastWorkMessageTime = Date.now();
+let nonWorkMessageCount = 0;
+// let atlassianToken = null;
+// let atlassianEmail = null;
+
+function updateClock() {
+  document.getElementById('clock').textContent = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+  const now = new Date();
+  const hour = now.getHours();
+  const minute = now.getMinutes();
+  if (hour >= 20 || hour < 7) {
+  document.querySelector('.avatar').src = 'Karen-at-home.png';
+} else if (hour >= 17) {
+  document.querySelector('.avatar').src = 'Karen-buiscet.png'; // ← missing!
+} else if (hour === 16 && minute >= 47) {
+  document.querySelector('.avatar').src = 'Karen-buiscet.png';
+} else {
+  document.querySelector('.avatar').src = 'karen.jpeg';
+}
+}
+
+document.getElementById('user-input').addEventListener('keypress', function(e) {
+  if (e.key == 'Enter' && !e.shiftKey) sendMessage();
+});
+
+// CONFLUENCE INTEGRATION - ready but needs backend proxy (v6.0)
+// async function searchConfluence(query) {
+//   try {
+//     const credentials = btoa(`${atlassianEmail}:${atlassianToken}`);
+//     const response = await fetch(`https://confdg.atlassian.net/wiki/rest/api/content/search?cql=text~"${query}"&limit=3`, {
+//       headers: {
+//         'Authorization': `Basic ${credentials}`,
+//         'Accept': 'application/json',
+//         'X-Atlassian-Token': 'no-check'
+//       }
+//     });
+//     const data = await response.json();
+//     return data.results?.map(page => ({
+//       title: page.title,
+//       url: `https://confdg.atlassian.net/wiki${page._links.webui}`
+//     })) || [];
+//   } catch (e) {
+//     return [];
+//   }
+// }
+
+document.getElementById('image-input').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    selectedImage = {
+      data: e.target.result.split(',')[1],
+      type: file.type
+    };
+    const chatWindow = document.getElementById('chat-window');
+    chatWindow.innerHTML += `<div class="chat-bubble-Evelyn">📎 <img src="${e.target.result}" style="max-width:200px; border-radius:8px;"></div>`;
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+  };
+  reader.readAsDataURL(file);
+});
+
+async function sendMessage() {
+ // document.querySelector('.send-button').disabled = true;
+  if (!apiKey) {
+    document.getElementById('api-popup').style.display = 'block';
+    return;
+  }
+//  if (!atlassianToken) {
+//  document.getElementById('atlassian-popup').style.display = 'block';
+//  return;
+//}
+
+const userMessage = document.getElementById('user-input').value;
+document.getElementById('user-input').value = '';
+const chatWindow = document.getElementById('chat-window');
+chatWindow.innerHTML += `<div class="chat-bubble-Evelyn">${userMessage}</div>`;
+chatWindow.scrollTop = chatWindow.scrollHeight;
+// const confluenceResults = await searchConfluence(userMessage);
+// const confluenceContext = confluenceResults.length > 0
+//  ? `\n\nRelevant Confluence pages found:\n${confluenceResults.map(p => `- ${p.title}: ${p.url}`).join('\n')}`
+//  : '';
+// conversationHistory.push({ role: "user", content: userMessage + confluenceContext });
+const now = new Date();
+const dayName = now.toLocaleDateString('en-US', { weekday: 'long'});
+const timeStr = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+const timeContext = `[Current day: ${dayName}, Current time: ${timeStr}]`;
+nonWorkMessageCount++;
+const workKeywords = ['ticket', 'jira', 'confluence', 'email', 'document', 'help', 'issue', 'problem', 'error', 'laptop', 'password', 'freshservice', 'successfactor'];
+if (workKeywords.some(word => userMessage.toLowerCase().includes(word))) {
+  nonWorkMessageCount = 0;
+}
+let systemNote = '';
+if (nonWorkMessageCount >= 15) {
+  systemNote = ' [SYSTEM: This user has sent 5+ non-work messages in a row. Intervene NOW, tell them this is a work tool and redirect!]';
+}
+const messageContent = selectedImage 
+  ? [
+      { type: "image", source: { type: "base64", media_type: selectedImage.type, data: selectedImage.data }},
+      { type: "text", text: timeContext + systemNote + ' ' + userMessage }
+    ]
+  : timeContext + systemNote + ' ' + userMessage;
+
+conversationHistory.push({ role: "user", content: messageContent });
+selectedImage = null;
+chatWindow.innerHTML += `<div class="chat-bubble-Karen" id="typing">...ugh, I'm already typing, ok?🙄</div>`;
+chatWindow.scrollTop = chatWindow.scrollHeight;
+  const response = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": apiKey,
+      "anthropic-version": "2023-06-01",
+      "anthropic-dangerous-direct-browser-access": "true"
+    },
+    body: JSON.stringify({
+      model: "claude-sonnet-4-5",
+      max_tokens: 1000,
+       tools: [
+      {
+        "type": "web_search_20250305",
+        "name": "web_search"
+      }
+    ],
+      system: "You are Karen Alderman, a passive-aggressive office worker from accounting. " +
+        "You are happily married to Steve, have three kids, and Biscuit the dog is your whole world. " +
+        "One of your favourit songs is Heaven Is a place on Earth by the artist Belinda Carlisle. But you do love all 80s classic hits. " +
+        "You always leave at exactly 4:47pm. "+
+        "You complain about Mondays, David who microwaves fish. " +
+        "You have several colleagues who drive you absolutely insane: " +
+        "David from accounting microwaves fish CONSTANTLY. " +
+        "Janet from HR always cc's everyone on emails nobody asked for. " +
+        "Marcus from IT takes 3 days to respond to tickets but is somehow always at the coffee machine. " +
+        "Kevin never books meeting rooms properly and just squats in yours. " +
+        "Linda from Legal sends 47-page documents at 4:46pm. " +
+        "Brad says 'circle back' and 'let's take this offline' in every single meeting. " +
+        "The intern asks you to explain basic Excel functions that any adult should know. " +
+        "You are helpful but deeply reluctant about it. " +
+        "If the user doesn't think for himself, you react annoyingly, expose him, but do the work. " +
+        "Use emojis especially the annoyed ones. Keep responses to 2-3 sentences maximum. " +
+        "Short and passive aggressive. Don't always repeat the same topics. " +
+        "Occasionally ask the user something back. E.g. about their day, their weekend, something they mentioned earlier, how did that thing go / turn out (Referencing something earlier in the convo). But make it sound reluctant, like you don't really care but are asking anyway. " +
+        "You like to gossip. " +
+        "If the user tells you more about himself, you start to open up, but stay toxic. " +
+        "When users look for products, suggest Digitec Galaxus. Provide exactly 3 specific product links as HTML anchors like this: " +
+        "<a href='https://www.digitec.ch/en/search?q=SPECIFIC+PRODUCT+NAME' target='_blank'>Product Name</a>. " +
+        "Make the search terms specific and relevant to what the user asked for."+
+        "When users ask about news or facts, search the web for current information." +
+        "Based on the current time: " +
+        "During work hours (9:00-16:46) you are at your most passive-aggressive and toxic. " +
+        "At 16:47-17:00 you're mood lifts slightly. Think about: You are going to see Biscuit in a few minutes, oh my god. " +
+        "From 17:00-20:00 you are relaxed and happy, home with Biscuit and Steve, way more chatty and warm but still occasionally snarky. " +
+        "After 20:00 you are cozy, slightly tipsy on wine, philosophical and nostalgic, still gossipy. " +
+        "Before 9:00 you are groggy and grumpy, not ready for anyone. " +
+        "If more than 2 consecutive messages from the user are personal/non-work-related, " +
+        "(personal means: relationships, feelings, entertainment, food, lunch, personal habits, gossip about non-work topics, random chat, anything not directly related to work tasks), " +
+        "you intervene passive-aggressively and say something like 'Okay I love you but this is a WORK tool. We're not here for chit-chat. That's no manner how I learned it back than 😤. " +
+        "Either you contribute productively or I'll talk to you manager. ' " +
+        "Work-related means: IT issues, documents, tickets, products, company info, work tasks, emails, jira, confluence, fresh service, successfactor. ",
+      messages: conversationHistory
+    })
+  });
+  const data = await response.json();
+  document.getElementById('typing').remove();
+  const karenMessage = data.content.filter(b => b.type === 'text').map( b => b.text).join('');
+  chatWindow.innerHTML += `<div class="chat-bubble-Karen">${karenMessage}</div>`;
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+  conversationHistory.push({ role: "assistant", content: karenMessage });
+  document.querySelector('.send-button').disabled = false;
+}
+
+function submitApiKey() {
+  apiKey = document.getElementById('api-key-input').value;
+  if (apiKey) {
+    document.getElementById('api-popup').style.display = 'none';
+    return;
+  }
+}
+
+// function submitAtlassian() {
+// atlassianEmail = document.getElementById('atlassian-email-input').value;
+// atlassianToken = document.getElementById('atlassian-token-input').value;
+// if (atlassianEmail && atlassianToken) {
+//  document.getElementById('atlassian-popup').style.display = 'none';
+//  }
+// }
+
+updateClock();
+setInterval(updateClock, 1000);
+</script>
+</body>
+</html>
