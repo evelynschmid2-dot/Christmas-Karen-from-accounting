@@ -24,11 +24,11 @@ karen_img = pygame.image.load("ChristmasKaren.png")
 karen_img = pygame.transform.scale(karen_img, (600, 600))
 karenglobe_img = pygame.image.load("karenglobe.png")
 karenglobe_x, karenglobe_y = 100, 100
-karenglobe_speed_x, karenglobe_speed_y = 3, 2
+karenglobe_speed_x, karenglobe_speed_y = 0.1, 0.2
 karenglobe_img = pygame.transform.scale(karenglobe_img, (300, 300))
 buiscetglobe_img = pygame.image.load("buiscetglobe.png")
 buiscetglobe_x, buiscetglobe_y = 500, 300
-buiscetglobe_speed_x, buiscetglobe_speed_y = -2, 3
+buiscetglobe_speed_x, buiscetglobe_speed_y = -0.2, 0.3
 buiscetglobe_img = pygame.transform.scale(buiscetglobe_img, (300, 300))
 
 screen = pygame.display.set_mode((1280, 720))
@@ -58,7 +58,7 @@ while running:
     
     screen.blit(karenglobe_img, (karenglobe_x, karenglobe_y))
     screen.blit(buiscetglobe_img, (buiscetglobe_x, buiscetglobe_y))
-    screen.blit(karen_img, (0, 0))
+    #screen.blit(karen_img, (0, 0))
     font = pygame.font.SysFont("comicsansms", 48)
     time_str = datetime.now().strftime("%H:%M:%S")
     clock_surface = font.render(time_str, True, (255, 255, 255))
